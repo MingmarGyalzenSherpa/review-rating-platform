@@ -1,0 +1,48 @@
+
+services:
+    broker_service:
+        build:
+            context: ./../broker-service
+            dockerfile: ./../broker-service/broker-service.dockerfile
+        restart: always
+        ports:
+            - "8080:80"
+        deploy:
+            mode: replicated
+            replicas: 1
+    authentication_service:
+        build:
+            context: ./../authentication-service
+            dockerfile: ./../authentication-service/authentication-service.dockerfile
+        restart: always
+        ports:
+            - "8081:80"
+        deploy:
+            mode: replicated
+            replicas: 1   
+
+    postgres:
+        image: 'postgres:14.2'
+        ports:
+          - "5433:5432"
+        restart: always
+        deploy:
+          mode: replicated
+          replicas: 1
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: users
+        volumes:
+          - ./db-data/postgres/:/var/lib/postgresql/data/
+    
+    mongo:
+        image: 'mongo:4.2.16-bionic'
+        ports:
+          - "27018:27017"
+        environment:
+          MONGO_INITDB_DATABASE: review-rating
+          MONGO_INITDB_ROOT_USERNAME: admin
+          MONGO_INITDB_ROOT_PASSWORD: password
+        volumes:
+          - ./db-data/mongo/:/data/db/
