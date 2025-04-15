@@ -1,6 +1,6 @@
 
 services:
-    broker_service:
+    broker-service:
         build:
             context: ./../broker-service
             dockerfile: ./../broker-service/broker-service.dockerfile
@@ -10,7 +10,7 @@ services:
         deploy:
             mode: replicated
             replicas: 1
-    authentication_service:
+    authentication-service:
         build:
             context: ./../authentication-service
             dockerfile: ./../authentication-service/authentication-service.dockerfile
@@ -19,7 +19,27 @@ services:
             - "8081:80"
         deploy:
             mode: replicated
-            replicas: 1   
+            replicas: 1  
+    product-service:
+        build:
+            context: ./../product-service
+            dockerfile: ./../product-service/product-service.dockerfile
+        restart: always
+        ports:
+            - "8082:80"
+        deploy:
+            mode: replicated
+            replicas: 1
+    review-rating-service:
+        build: 
+            context: ./../review-rating-service
+            dockerfile: ./../review-rating-service/review-rating-service.dockerfile
+        restart: always
+        ports:
+            - "8083:80"
+        deploy: 
+            mode: replicated
+            replicas: 1
 
     postgres:
         image: 'postgres:14.2'

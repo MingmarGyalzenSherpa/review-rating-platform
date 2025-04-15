@@ -9,6 +9,7 @@ import (
 	"net/rpc"
 	"time"
 
+	"github.com/MingmarGyalzenSherpa/review-rating-platform/product-service/data"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
